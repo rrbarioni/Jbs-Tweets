@@ -12,33 +12,69 @@ Plano:
 
 import get_old_tweets as got
 
-query_search = "jbs"
-start_date = "2017-05-16"
-end_date = "2017-05-18"
-max_tweets = 100
-
-jbs_keywords = [
-
-]
+jbs_keywords = []
 
 unicode_encode_error_not_covered = [
 	"\u200b"
 ]
 
-file = open("tweets/" + str(query_search) + "_" + str(start_date) + "_" + str(end_date) + "_" + str(max_tweets) + ".txt", "w")
+def get_tweets(query_search, start_date, end_date, tweets_amount):
+	file = open("tweets/" + str(query_search) + "_" + str(start_date) + "_" + str(end_date) + "_" + str(tweets_amount) + ".txt", "w")
+	
+	tweetCriteria = got.manager.TweetCriteria()\
+		.setQuerySearch(query_search)\
+		.setSince(start_date)\
+		.setUntil(end_date)\
+		.setMaxTweets(tweets_amount)
+	tweets = got.manager.TweetManager.getTweets(tweetCriteria)
+	tweets_text = [tweet.text for tweet in tweets]
+	for char in unicode_encode_error_not_covered:
+		tweets_text = [text.replace(char, " ") for text in tweets_text]
 
-tweetCriteria = got.manager.TweetCriteria()\
-	.setQuerySearch(query_search)\
-	.setSince(start_date)\
-	.setUntil(end_date)\
-	.setMaxTweets(max_tweets)
-tweets = got.manager.TweetManager.getTweets(tweetCriteria)
-tweets_text = [tweet.text for tweet in tweets]
-for char in unicode_encode_error_not_covered:
-	tweets_text = [text.replace(char, " ") for text in tweets_text]
+	for tweet in tweets_text:
+		file.write(tweet)
+		file.write("\n")
 
-for tweet in tweets_text:
-	file.write(tweet)
-	file.write("\n")
+	file.close()
 
-file.close()
+# def month_after(day):
+
+# def day_after(day):
+
+
+# pegar tweets a partir de 17/11/2016 e até 17/11/2017
+# 5000 tweets por mês
+'''
+query_search = "jbs"
+start_date = "2016-11-17"
+end_date = "2017-11-17"
+tweets_amount = 5000
+
+current_date = start_date
+while month_after(current_date) != end_date:
+	get_tweets(
+		query_search=query_search,
+		start_date=current_date,
+		end_date=month_after(current_date),
+		tweets_amount=tweets_amount
+	)
+	current_date = month_after(current_date)
+'''
+
+# pegar tweets a partir de 17/11/2016 e até 17/11/2017
+# 1000 tweets por dia
+
+query_search = "jbs"
+start_date = "2016-11-17"
+end_date = "2017-11-17"
+tweets_amount = 1000
+
+current_date = start_date
+while day_after(current_date) != end_date:
+	get_tweets(
+		query_search=query_search,
+		start_date=current_date,
+		end_date=day_after(current_date),
+		tweets_amount=tweets_amount
+	)
+	current_date = day_after(current_date)
