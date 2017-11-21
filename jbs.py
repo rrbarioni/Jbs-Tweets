@@ -1,5 +1,14 @@
-# Script for getting tweets from JBS event (May 17th of 2017)
-# You shall execute "chcp 65001" before "py jbs.py"
+'''
+Script for getting tweets from JBS event (May 17th of 2017)
+You shall execute "chcp 65001" before "py jbs.py"
+
+Plano:
+	pegar tweets a partir de 17/11/2016 e até 17/11/2017
+	5000 tweets por mês? 1000 tweets por dia?
+	verificar palavras-chave de tweets relacionados ao evento da delação da JBS ("Temer", "Cunha", "delação", etc)
+		procurar nos tweets de perto do acontecido, pra considerar que o tweet está relacionado à delação
+	usar conjunto de palavras-chave obtido pra filtar todos os tweets obtidos, a fim de ver se o tweet está relacionado à delação (ou não)
+'''
 
 import get_old_tweets as got
 
