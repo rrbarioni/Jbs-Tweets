@@ -76,8 +76,8 @@ class TweetManager:
 				if tweetCriteria.maxTweets > 0 and len(results) >= tweetCriteria.maxTweets:
 					active = False
 					break
-				elif len(results) % 50 == 0:
-					print("Extracting tweets (" + str(len(results)) + " out of " + str(tweetCriteria.maxTweets) + ")")
+				elif len(results) % 100 == 0:
+					print("  " + str(len(results)) + " / " + str(tweetCriteria.maxTweets))
 					
 		
 		if receiveBuffer and len(resultsAux) > 0:

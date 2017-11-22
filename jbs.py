@@ -11,6 +11,7 @@ Plano:
 '''
 
 import get_old_tweets as got
+from date_util import *
 
 jbs_keywords = []
 
@@ -36,11 +37,6 @@ def get_tweets(query_search, start_date, end_date, tweets_amount):
 		file.write("\n")
 
 	file.close()
-
-# def month_after(day):
-
-# def day_after(day):
-
 
 # pegar tweets a partir de 17/11/2016 e até 17/11/2017
 # 5000 tweets por mês
@@ -71,6 +67,8 @@ tweets_amount = 1000
 
 current_date = start_date
 while day_after(current_date) != end_date:
+	print("current_date: " + current_date)
+
 	get_tweets(
 		query_search=query_search,
 		start_date=current_date,
