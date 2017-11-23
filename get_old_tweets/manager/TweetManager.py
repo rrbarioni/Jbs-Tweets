@@ -34,12 +34,23 @@ class TweetManager:
 				
 				usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
 				txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
-				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
-				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
-				dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
+				# retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
+				# favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
+				# dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
+				retweets = tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count");
+				if retweets is not None:
+					retweets = int(retweets.replace(",", ""))
+				favorites = tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count")
+				if favorites is not None:
+					favorites = int(favorites.replace(",", ""));
+				dateSec = tweetPQ("small.time span.js-short-timestamp").attr("data-time")
+				if dateSec is not None:
+					dateSec = int(dateSec);
 				id = tweetPQ.attr("data-tweet-id");
 				permalink = tweetPQ.attr("data-permalink-path");
-				user_id = int(tweetPQ("a.js-user-profile-link").attr("data-user-id"))
+				user_id = tweetPQ("a.js-user-profile-link").attr("data-user-id")
+				if user_id is not None:
+					user_id = int(user_id)
 				
 				geo = ''
 				geoSpan = tweetPQ('span.Tweet-geo')
@@ -56,8 +67,9 @@ class TweetManager:
 				tweet.username = usernameTweet
 				
 				tweet.text = txt
-				tweet.date = datetime.datetime.fromtimestamp(dateSec)
-				tweet.formatted_date = datetime.datetime.fromtimestamp(dateSec).strftime("%a %b %d %X +0000 %Y")
+				if dateSec is not None:
+					tweet.date = datetime.datetime.fromtimestamp(dateSec)
+					tweet.formatted_date = datetime.datetime.fromtimestamp(dateSec).strftime("%a %b %d %X +0000 %Y")
 				tweet.retweets = retweets
 				tweet.favorites = favorites
 				tweet.mentions = " ".join(re.compile('(@\\w*)').findall(tweet.text))

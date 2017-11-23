@@ -20,7 +20,7 @@ unicode_encode_error_not_covered = [
 ]
 
 def get_tweets(query_search, start_date, end_date, tweets_amount):
-	file = open("tweets/" + str(query_search) + "_" + str(start_date) + "_" + str(end_date) + "_" + str(tweets_amount) + ".txt", "w")
+	file = open("tweets/" + str(query_search) + "_" + str(start_date) + "_" + str(end_date) + "_" + str(tweets_amount) + ".txt", "w", encoding="utf8")
 	
 	tweetCriteria = got.manager.TweetCriteria()\
 		.setQuerySearch(query_search)\
@@ -66,7 +66,7 @@ end_date = "2017-11-17"
 tweets_amount = 1000
 
 current_date = start_date
-while day_after(current_date) != end_date:
+while current_date != end_date:
 	print("current_date: " + current_date)
 
 	get_tweets(
