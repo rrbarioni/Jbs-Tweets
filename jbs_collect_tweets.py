@@ -40,39 +40,41 @@ def get_tweets(query_search, start_date, end_date, tweets_amount):
 
 # pegar tweets a partir de 17/11/2016 e até 17/11/2017
 # 5000 tweets por mês
-'''
-query_search = "jbs"
-start_date = "2016-11-17"
-end_date = "2017-11-17"
-tweets_amount = 5000
+def tweets_5000_month():
+	query_search = "jbs"
+	start_date = "2016-11-17"
+	end_date = "2017-11-17"
+	tweets_amount = 5000
 
-current_date = start_date
-while month_after(current_date) != end_date:
-	get_tweets(
-		query_search=query_search,
-		start_date=current_date,
-		end_date=month_after(current_date),
-		tweets_amount=tweets_amount
-	)
-	current_date = month_after(current_date)
-'''
+	current_date = start_date
+	while month_after(current_date) != end_date:
+		get_tweets(
+			query_search=query_search,
+			start_date=current_date,
+			end_date=month_after(current_date),
+			tweets_amount=tweets_amount
+		)
+		current_date = month_after(current_date)
 
 # pegar tweets a partir de 17/11/2016 e até 17/11/2017
 # 1000 tweets por dia
+def tweets_1000_day():
+	query_search = "jbs"
+	start_date = "2016-11-17"
+	end_date = "2017-11-17"
+	tweets_amount = 1000
 
-query_search = "jbs"
-start_date = "2016-11-17"
-end_date = "2017-11-17"
-tweets_amount = 1000
+	current_date = start_date
+	while current_date != end_date:
+		print("current_date: " + current_date)
 
-current_date = start_date
-while current_date != end_date:
-	print("current_date: " + current_date)
+		get_tweets(
+			query_search=query_search,
+			start_date=current_date,
+			end_date=day_after(current_date),
+			tweets_amount=tweets_amount
+		)
+		current_date = day_after(current_date)
 
-	get_tweets(
-		query_search=query_search,
-		start_date=current_date,
-		end_date=day_after(current_date),
-		tweets_amount=tweets_amount
-	)
-	current_date = day_after(current_date)
+if __name__ == '__main__':
+    tweets_1000_day()
