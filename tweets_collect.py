@@ -23,7 +23,7 @@ unicode_encode_error_not_covered = [
 ]
 
 def get_tweets(query_search, start_date, end_date, tweets_amount):
-    file = open('tweets/' + str(query_search) + '_' + str(start_date) + '_' + str(end_date) + '_' + str(tweets_amount) + '.txt', 'w', encoding='utf8')
+    file = open('tweets/raw/' + str(query_search) + '_' + str(start_date) + '_' + str(end_date) + '_' + str(tweets_amount) + '.txt', 'w', encoding='utf8')
     
     tweetCriteria = got.manager.TweetCriteria()\
         .setQuerySearch(query_search)\
@@ -46,10 +46,10 @@ def write_to_csv():
     Converts all txt tweets files into one single csv file
     '''
     tweets = []
-    tweets_files_folder = 'tweets_1000_day/raw'
+    tweets_files_folder = 'tweets/raw'
     tweets_file_list = os.listdir(tweets_files_folder)
 
-    with open('tweets_1000_day/all_tweets.csv', 'w', newline='', encoding='utf-8') as tweets_csv:
+    with open('tweets/all_tweets.csv', 'w', newline='', encoding='utf-8') as tweets_csv:
         spamwriter = csv.writer(tweets_csv, delimiter=';')
         for file_name in tweets_file_list:
             print(file_name)
@@ -58,24 +58,6 @@ def write_to_csv():
                 tweets = [line.strip() for line in txt_file]
                 for tweet in tweets:
                     spamwriter.writerow([str(current_file_date), tweet.replace(';', ','), ''])
-
-# pegar tweets a partir de 17/11/2016 e até 17/11/2017
-# 5000 tweets por mês
-def tweets_5000_month():
-    query_search = 'jbs'
-    start_date = '2016-11-17'
-    end_date = '2017-11-17'
-    tweets_amount = 5000
-
-    current_date = start_date
-    while month_after(current_date) != end_date:
-        get_tweets(
-            query_search=query_search,
-            start_date=current_date,
-            end_date=month_after(current_date),
-            tweets_amount=tweets_amount
-        )
-        current_date = month_after(current_date)
 
 # pegar tweets a partir de 17/11/2016 e até 17/11/2017
 # 1000 tweets por dia
